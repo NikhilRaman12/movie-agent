@@ -1,16 +1,18 @@
 ---
-title: Movie Search Agent
+title: Movie Agent
 emoji: 🎬
 colorFrom: blue
 colorTo: indigo
 sdk: gradio
-sdk_version: 4.29.0
+sdk_version: 6.13.0
 app_file: app.py
 python_version: "3.11"
 pinned: false
+license: mit
+short_description: AI powered movie and web series recommendation agent
 ---
 
-# Movie Search Agent
+# Movie Agent
 
 This Hugging Face Space uses Gradio, LangChain, and Groq to recommend movies and web series with live web search.
 

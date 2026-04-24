@@ -121,6 +121,10 @@ def build_output_textbox():
     return gr.Textbox(**textbox_kwargs)
 
 
+def is_huggingface_space() -> bool:
+    return bool(os.getenv("SPACE_ID") or os.getenv("SPACE_HOST"))
+
+
 def find_available_port(start: int = 7860, end: int = 7959) -> int:
     for port in range(start, end + 1):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -134,10 +138,13 @@ def find_available_port(start: int = 7860, end: int = 7959) -> int:
 
 
 def build_launch_kwargs():
+    share_env = (os.getenv("GRADIO_SHARE") or "").strip().lower()
+    share_enabled = share_env in {"1", "true", "yes"} if share_env else not is_huggingface_space()
+
     launch_kwargs = {
         "server_name": os.getenv("GRADIO_SERVER_NAME", "0.0.0.0"),
         "show_error": True,
-        "share": True,
+        "share": share_enabled,
     }
 
     port = os.getenv("PORT") or os.getenv("GRADIO_SERVER_PORT")
